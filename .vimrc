@@ -56,10 +56,24 @@ set ignorecase
 set nocompatible
 " vim 自身命令行模式智能补全
 set wildmenu
+" disable continuation of comment
+au FileType * setlocal formatoptions-=c formatoptions-=r
+" italic字体注释
+highlight Comment cterm=italic
 "-------------------------new tab style----------------------------------------
 " 设置新窗口在当前窗口的下面和右边
 set splitbelow
 set splitright
+"---------------------------clipboard------------------------------------------
+" yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
+
 " -----------------------vundle 环境设置---------------------------------------
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -67,8 +81,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'tomasr/molokai'
-Plugin 'fanfuqiang/molokai'
+Plugin 'tomasr/molokai'
+"Plugin 'fanfuqiang/molokai'
 Plugin 'vim-scripts/phd'
 "Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-scripts/taglist.vim'
@@ -99,7 +113,7 @@ Plugin 'gcmt/wildfire.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
-Plugin 'lilydjwg/fcitx.vim'
+"Plugin 'lilydjwg/fcitx.vim'
 " 插件列表结束
 call vundle#end()
 filetype plugin indent on
@@ -319,6 +333,8 @@ nnoremap <Leader>sp :CtrlSF<CR>
 nmap <Leader>tn :tnext<CR>
 " 反向遍历同名标签
 nmap <Leader>tp :tprevious<CR>
+" 设置搜索
+let g:ctrlsf_ackprg = 'ag'
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v
 " 默认 --fields=+iaS 不满足 YCM 要求，需改为 --fields=+iaSl
@@ -357,7 +373,7 @@ nnoremap <Leader>e :SyntasticCheck<CR>
 nnoremap <Leader>f :SyntasticToggleMode<CR>
 " ------------------------------NERDTree---------------------------------------
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap <Leader>fl :NERDTreeToggle<CR>
+nmap <silent> <Leader>fl :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=32
 "let NERDTreeWinPos="right"

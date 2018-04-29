@@ -1,0 +1,11 @@
+build-essential
+libc6
+bison
+flex
+texinfo
+tmux
+git
+zsh
+vim-gtk // +clipboard
+gdb ../configure --enable-tui
+
