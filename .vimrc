@@ -56,6 +56,8 @@ set ignorecase
 set nocompatible
 " vim 自身命令行模式智能补全
 set wildmenu
+" enable true color
+"set termguicolors
 " disable continuation of comment
 au FileType * setlocal formatoptions-=c formatoptions-=r
 " italic字体注释
@@ -81,6 +83,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'lifepillar/vim-solarized8'
+"Plugin 'romainl/flattened'
 Plugin 'tomasr/molokai'
 "Plugin 'fanfuqiang/molokai'
 Plugin 'vim-scripts/phd'
@@ -113,19 +117,28 @@ Plugin 'gcmt/wildfire.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
-"Plugin 'lilydjwg/fcitx.vim'
+Plugin 'lilydjwg/fcitx.vim'
 " 插件列表结束
 call vundle#end()
 filetype plugin indent on
 " ------------------------配 色 与 显 示 方 案--------------------------------
 set t_Co=256
+"set nocursorline
+let g:solarized_use16 = 1
 set background=dark
-"colorscheme solarized
-colorscheme molokai
+colorscheme solarized8
+"colorscheme flattened
+let g:solarized_termcolors=256
+"let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
+"let g:solarized_statusline="low"
+"let g:solarized_diffmode="low"
+"colorscheme molokai
 "let g:molokai_original = 1
 let g:rehash256=1
 "colorscheme phd
 "highlight Comment cterm=bold
+"set nocursorline
 " 禁止光标闪烁
 set gcr=a:block-blinkon0
 " 禁止显示滚动条
@@ -161,6 +174,8 @@ set ruler
 set number
 " 高亮显示当前行/列
 set cursorline
+" Removes the underline causes by enabling cursorline:
+highlight clear CursorLine
 "set cursorcolumn
 " 高亮显示搜索结果
 set hlsearch
