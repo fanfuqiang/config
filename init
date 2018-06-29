@@ -6,6 +6,17 @@ texinfo
 tmux
 git
 zsh
+ctags
+fonts-powerline
 vim-gtk // +clipboard
+// gdb + tui
+libncurses5-dev libncursesw5-dev
 gdb ../configure --enable-tui
+// gcc
+configure --prefix=/home/zet/bin/gcc-90 --disable-bootstrap --enable-languages=c,c++ 
+ --enable-threads=posix  --enable-lto --enable-plugin --enable-gold=yes 
+ --disable-multilib
+// binutils
+configure --prefix=/home/zet/bin/binutils-2.30 --enable-gold=yes --enable-plugins
+ --enable-threads
 
