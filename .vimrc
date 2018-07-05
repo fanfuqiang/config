@@ -5,9 +5,6 @@ let mapleader=";"
 filetype on
 " 根据侦测到的不同类型加载对应的插件
 filetype plugin on
-" 定义快捷键到行首和行尾
-"nmap LB 0
-"nmap LE $
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
@@ -24,18 +21,6 @@ nmap <Leader>Q :qa!<CR>
 map <silent> <F9> :TlistToggle<CR>
 " 依次遍历子窗口
 nnoremap nw <C-W><C-W>
-" 跳转至右方的窗口
-"nnoremap <C-Right> <C-W>l
-" 跳转至左方的窗口
-"nnoremap <C-Left> <C-W>h
-" 跳转至上方的子窗口
-"nnoremap <C-Up> <C-W>k
-" 跳转至下方的子窗口
-"nnoremap <C-Down> <C-W>j
-" 打开定义在一个新窗口
-"nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>v
-" 在一个新tab中打开定义 
-"map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open the definition in a vertical split
 nnoremap <silent> <C-\> :vs <CR>:exec("tag ".expand("<cword>"))<CR>
 " Open the definition in a horizontal split
@@ -81,6 +66,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'lifepillar/vim-solarized8'
+"Plugin 'romainl/flattened'
 Plugin 'tomasr/molokai'
 "Plugin 'fanfuqiang/molokai'
 Plugin 'vim-scripts/phd'
@@ -108,7 +95,7 @@ Plugin 'Valloric/ycmd'
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'derekwyatt/vim-protodef'
 Plugin 'scrooloose/nerdtree'
-Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'Lokaltog/vim-easymotion'
@@ -119,13 +106,18 @@ call vundle#end()
 filetype plugin indent on
 " ------------------------配 色 与 显 示 方 案--------------------------------
 set t_Co=256
+let g:solarized_use16 = 1
 set background=dark
-"colorscheme solarized
-colorscheme molokai
+colorscheme solarized8
+"colorscheme flattened
+let g:solarized_termcolors=256
+let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
+"let g:solarized_statusline="low"
+"let g:solarized_diffmode="low"
+"colorscheme molokai
 "let g:molokai_original = 1
 let g:rehash256=1
-"colorscheme phd
-"highlight Comment cterm=bold
 " 禁止光标闪烁
 set gcr=a:block-blinkon0
 " 禁止显示滚动条
@@ -137,20 +129,8 @@ set guioptions-=R
 set guioptions-=m
 set guioptions-=T
 "------------------------------------------------------------------------------
-" 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
-"fun! ToggleFullscreen()
- "   call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
-"endf
-" 全屏开/关快捷键
-"map <silent> <F11> :call ToggleFullscreen()<CR>
-" 启动 vim 时自动全屏
-"autocmd VimEnter * call ToggleFullscreen()
 " 总是显示状态栏
 set laststatus=2
-" Always display the tabline, even if there is only one tab
-"set showtabline=2
-" Hide the default mode text (e.g. -- INSERT -- below the statusline)
-"set noshowmode
 " 开启相对行号
 set relativenumber
 " 开启行号显示
@@ -161,7 +141,8 @@ set ruler
 set number
 " 高亮显示当前行/列
 set cursorline
-"set cursorcolumn
+" Removes the underline causes by enabling cursorline:
+highlight clear CursorLine
 " 高亮显示搜索结果
 set hlsearch
 " 禁止折行
@@ -175,8 +156,6 @@ let Tlist_Exit_OnlyWindow = 1
 " ---------------------------状 态 栏 设 置------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-" 状态栏显示会出错
-"let g:Powerline_colorscheme='solarized256'
 " 开启语法高亮功能
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
@@ -211,70 +190,6 @@ set foldmethod=syntax
 set nofoldenable
 " *.cpp 和 *.h 间切换
 nmap <silent> <Leader>sw :FSHere<cr>
-" -----------------------------cscope 设 置------------------------------------
-if has("cscope")
-  set csprg=/usr/bin/cscope
-  set csto=1
-  set cst
-  set nocsverb
-  " add any database in current directory
-  if filereadable("cscope.out")
-      cs add cscope.out
-  endif
-  set csverb
-endif
-" The following maps all invoke one of the following cscope search types:
-    "
-    "   's'   symbol: find all references to the token under cursor
-    "   'g'   global: find global definition(s) of the token under cursor
-    "   'c'   calls:  find all calls to the function name under cursor
-    "   't'   text:   find all instances of the text under cursor
-    "   'e'   egrep:  egrep search for the word under cursor
-    "   'f'   file:   open the filename under cursor
-    "   'i'   includes: find files that include the filename under cursor
-    "   'd'   called: find functions that function under cursor calls
-    "
-    " Below are three sets of the maps: one set that just jumps to your
-    " search result, one that splits the existing vim window horizontally and
-    " diplays your search result in the new window, and one that does the same
-    " thing, but does a vertical split instead (vim 6 only).
-    "
-    " I've used CTRL-\ and CTRL-@ as the starting keys for these maps, as it's
-    " unlikely that you need their default mappings (CTRL-\'s default use is
-    " as part of CTRL-\ CTRL-N typemap, which basically just does the same
-    " thing as hitting 'escape': CTRL-@ doesn't seem to have any default use).
-    " If you don't like using 'CTRL-@' or CTRL-\, , you can change some or all
-    " of these maps to use other keys.  One likely candidate is 'CTRL-_'
-    " (which also maps to CTRL-/, which is easier to type).  By default it is
-    " used to switch between Hebrew and English keyboard mode.
-    "
-    " All of the maps involving the <cfile> macro use '^<cfile>$': this is so
-    " that searches over '#include <time.h>" return only references to
-    " 'time.h', and not 'sys/time.h', etc. (by default cscope will return all
-    " files that contain 'time.h' as part of their name).
-
-
-    " To do the first type of search, hit 'CTRL-\', followed by one of the
-    " cscope search types above (s,g,c,t,e,f,i,d).  The result of your cscope
-    " search will be displayed in the current window.  You can use CTRL-T to
-    " go back to where you were before the search.  
-nmap <Leader>css :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>csg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>csc :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>cst :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>cse :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>csf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <Leader>csi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <Leader>csd :cs find d <C-R>=expand("<cword>")<CR><CR>
-" 垂直新建窗口显示搜索结果
-nmap <Leader>vs :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>vg :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>vc :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>vt :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>ve :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <Leader>vf :vert scs find f <C-R>=expand("<cfile>")<CR><CR>	
-nmap <Leader>vi :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>	
-nmap <Leader>vd :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 " ----------------------------代 码 折 叠--------------------------------------
 "操作：za:打开或关闭当前折叠, zM:关闭所有折叠, zR:打开所有折叠.
 " 基于缩进或语法进行代码折叠
@@ -328,13 +243,14 @@ let g:tagbar_type_cpp = {
 " --------------------------标 识 符 跳 转-------------------------------------
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。
 " 快捷键速记法：search in project
-nnoremap <Leader>sp :CtrlSF<CR>
+nnoremap <silent> <Leader>sp :CtrlSF<CR>
 " 正向遍历同名标签
 nmap <Leader>tn :tnext<CR>
 " 反向遍历同名标签
 nmap <Leader>tp :tprevious<CR>
 " 设置搜索
 let g:ctrlsf_ackprg = 'ag'
+let g:ctrlsf_search_mode = 'sync'
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v
 " 默认 --fields=+iaS 不满足 YCM 要求，需改为 --fields=+iaSl
@@ -346,7 +262,8 @@ let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " -------------------------------YCM-------------------------------------------
 let g:ycm_auto_trigger = 0
-" 
+let g:ycm_global_ycm_extra_conf = '/home/zet/.vim/ycm-config/.ycm_extra_conf.py'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_confirm_extra_conf = 0
 "let g:ycm_error_symbol = ''
 "let g:ycm_warning_symbol = ''
@@ -384,30 +301,7 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
-"------------------------------MiniBufExplorer---------------------------------
-let g:miniBufExplorerAutoStart = 0
-" 显示/隐藏 MiniBufExplorer 窗口
-map <Leader>bl :MBEToggle<cr>
-" buffer 切换快捷键
-map <C-Tab> :MBEbn<cr>
-map <C-S-Tab> :MBEbp<cr>
 " -----------------------------ctags 搜 索 路 径-------------------------------
 set tags=./tags;/
-set guifont=Monaco\9
-" -----------------------------------------------------------------------------
-"set tabstop=4
-"syntax on
-"set guifont=Monaco \9
-"colorscheme evening
-"autocmd BufWritePost $HOME/.vimrc source $HOME/.vimrc 
-"set hlsearch
-" list file name
-"let &titlestring = expand("%:p")
-"if &term == "screen"
- " set t_ts=^[k
- " set t_fs=^[\
-"endif
-"if &term == "screen" || &term == "xterm"
-  "set title
-"endif
+"set guifont=Monaco\9
 
