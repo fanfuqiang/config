@@ -85,6 +85,7 @@ Plugin 'vim-scripts/indexer.tar.gz'
 Plugin 'vim-scripts/DfrankUtil'
 Plugin 'vim-scripts/vimprj'
 Plugin 'dyng/ctrlsf.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
@@ -240,6 +241,25 @@ let g:tagbar_type_cpp = {
          \ 'union'     : 'u'
      \ }
 \ }
+" -----------------------------------ctrlp-------------------------------------
+" When invoked without an explicit starting directory
+let g:ctrlp_working_path_mode = 'ra'
+" Exclude files and directories
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(d|swp|exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+" Use a custom file listing command
+let g:ctrlp_user_command = 'find %s -type f'
+" Ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" Set this to 1 to set searching by filename
+"let g:ctrlp_by_filename = 1
+" Set this to 1 to set regexp search as default
+let g:ctrlp_regexp = 1
+" Enable/Disable per-session caching
+"let g:ctrlp_use_caching = 1
 " --------------------------标 识 符 跳 转-------------------------------------
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。
 " 快捷键速记法：search in project
