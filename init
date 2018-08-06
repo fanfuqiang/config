@@ -19,4 +19,7 @@ configure --prefix=/home/zet/bin/gcc-90 --disable-bootstrap --enable-languages=c
 // binutils
 configure --prefix=/home/zet/bin/binutils-2.30 --enable-gold=yes --enable-plugins
  --enable-threads
-
+// clang
+configure --prefix=/home/zet/bin/llvm-33 --enable-debug-runtime --enable-debug-symbols
+ --enable-keep-symbols --enable-threads="no" --enable-pthreads="no"
+ --enable-shared="no" --enable-targets=host,cpp,mblaze
