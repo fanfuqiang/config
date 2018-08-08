@@ -23,3 +23,10 @@ configure --prefix=/home/zet/bin/binutils-2.30 --enable-gold=yes --enable-plugin
 configure --prefix=/home/zet/bin/llvm-33 --enable-debug-runtime --enable-debug-symbols
  --enable-keep-symbols --enable-threads="no" --enable-pthreads="no"
  --enable-shared="no" --enable-targets=host,cpp,mblaze
+// cmake clang
+cmake  -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_INSTALL_PREFIX=/home/zet/bin/llvm-601
+ -DCMAKE_C_FLAGS="-g3 -O0" -DCMAKE_CXX_FLAGS="-g3 -O0" -DLLVM_BUILD_TESTS=ON
+ -DLLVM_ENABLE_THREADS=OFF -DLLVM_OPTIMIZED_TABLEGEN=ON -DBUILD_SHARED_LIBS=OFF
+ -DLLVM_TARGETS_TO_BUILD="host;Lanai;NVPTX" -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="RISCV"
+ /home/zet/code/llvm-6.0.1
+
