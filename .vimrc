@@ -91,9 +91,9 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/ycmd'
-Plugin 'rdnetto/YCM-Generator'
+"Plugin 'rdnetto/YCM-Generator'
 Plugin 'derekwyatt/vim-protodef'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'fholgado/minibufexpl.vim'
@@ -106,16 +106,16 @@ Plugin 'suan/vim-instant-markdown'
 call vundle#end()
 filetype plugin indent on
 " ------------------------配 色 与 显 示 方 案--------------------------------
-set t_Co=256
+"set t_Co=256
 let g:solarized_use16 = 1
 set background=dark
 colorscheme solarized8
 "colorscheme flattened
 let g:solarized_termcolors=256
 let g:solarized_contrast="high"
-"let g:solarized_visibility="high"
+let g:solarized_visibility="high"
 "let g:solarized_statusline="low"
-"let g:solarized_diffmode="low"
+let g:solarized_diffmode="high"
 "colorscheme molokai
 "let g:molokai_original = 1
 let g:rehash256=1
@@ -165,13 +165,13 @@ syntax on
 " 自适应不同语言的智能缩进
 filetype indent on
 " 将制表符扩展为空格
-set expandtab
+"set expandtab
 " 设置编辑时制表符占用空格数
-set tabstop=8
+"set tabstop=2
 " 设置格式化时制表符占用空格数
-set shiftwidth=8
+"set shiftwidth=2
 " 让 vim 把连续数量的空格视为一个制表符
-set softtabstop=8
+"set softtabstop=2
 " 随 vim 自启动
 let g:indent_guides_enable_on_vim_startup=1
 " 从第二层开始可视化显示缩进
@@ -281,13 +281,20 @@ let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " -------------------------------YCM-------------------------------------------
-let g:ycm_auto_trigger = 0
+let g:ycm_auto_trigger = 1
+let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_global_ycm_extra_conf = '/home/zet/.vim/ycm-config/.ycm_extra_conf.py'
 let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_confirm_extra_conf = 0
-"let g:ycm_error_symbol = ''
-"let g:ycm_warning_symbol = ''
+let g:ycm_error_symbol = ''
+let g:ycm_warning_symbol = ''
 let g:ycm_show_diagnostics_ui = 0
+let g:ycm_collect_identifiers_from_tags_files = 1 
+let g:ycm_seed_identifiers_with_syntax = 1
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 " 
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
@@ -304,10 +311,10 @@ let g:ycm_filetype_blacklist = {
       \ 'vim-airline' : 1,
       \}
 " -------------------------------syntastic-------------------------------------
-let g:syntastic_check_on_open = 0
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-nnoremap <Leader>e :SyntasticCheck<CR> 
-nnoremap <Leader>f :SyntasticToggleMode<CR>
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+"nnoremap <Leader>e :SyntasticCheck<CR> 
+"nnoremap <Leader>f :SyntasticToggleMode<CR>
 " ------------------------------NERDTree---------------------------------------
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nmap <silent> <Leader>fl :NERDTreeToggle<CR>
@@ -323,5 +330,4 @@ let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 " -----------------------------ctags 搜 索 路 径-------------------------------
 set tags=./tags;/
-"set guifont=Monaco\9
 
