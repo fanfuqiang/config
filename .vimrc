@@ -5,30 +5,15 @@ let mapleader=";"
 filetype on
 " 根据侦测到的不同类型加载对应的插件
 filetype plugin on
-" 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap <Leader>y "+y
-" 设置快捷键将系统剪贴板内容粘贴至 vim
-nmap <Leader>p "+p
-" 定义快捷键关闭当前分割窗口
-nmap <Leader>q :q<CR>
-" 定义快捷键保存当前窗口内容
-nmap <Leader>w :w<CR>
-" 定义快捷键保存所有窗口内容并退出 vim
-nmap <Leader>WQ :wa<CR>:q<CR>
-" 不做任何保存，直接退出 vim
-nmap <Leader>Q :qa!<CR>
 " taglist
 map <silent> <F9> :TlistToggle<CR>
-" 依次遍历子窗口
-nnoremap nw <C-W><C-W>
+map <silent> <F5> :ALEToggle<CR>
 " Open the definition in a vertical split
 nnoremap <silent> <C-\> :vs <CR>:exec("tag ".expand("<cword>"))<CR>
 " Open the definition in a horizontal split
 nnoremap <silent> <Leader><C-\> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 " Close current split tab`
 nnoremap <silent> <C-x> :q <CR>
-"" 定义快捷键在结对符之间跳转
-nmap <Leader>M %
 " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " 设置backspace为删除
@@ -58,7 +43,6 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
-
 " -----------------------vundle 环境设置---------------------------------------
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -70,35 +54,35 @@ Plugin 'lifepillar/vim-solarized8'
 "Plugin 'romainl/flattened'
 Plugin 'tomasr/molokai'
 "Plugin 'fanfuqiang/molokai'
-Plugin 'vim-scripts/phd'
+"Plugin 'vim-scripts/phd'
 "Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'kshenoy/vim-signature'
-Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+"Plugin 'derekwyatt/vim-fswitch'
+"Plugin 'kshenoy/vim-signature'
+"Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-scripts/indexer.tar.gz'
 Plugin 'vim-scripts/DfrankUtil'
 Plugin 'vim-scripts/vimprj'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'SirVer/ultisnips'
+"Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'vim-scripts/DrawIt'
+Plugin 'w0rp/ale'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/ycmd'
 "Plugin 'rdnetto/YCM-Generator'
-Plugin 'derekwyatt/vim-protodef'
+"Plugin 'derekwyatt/vim-protodef'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
-Plugin 'sjl/gundo.vim'
+"Plugin 'sjl/gundo.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
 "Plugin 'lilydjwg/fcitx.vim'
@@ -114,13 +98,14 @@ colorscheme solarized8
 let g:solarized_termcolors=256
 let g:solarized_contrast="high"
 let g:solarized_visibility="high"
-"let g:solarized_statusline="low"
+let g:solarized_statusline="low"
 let g:solarized_diffmode="high"
 "colorscheme molokai
 "let g:molokai_original = 1
 let g:rehash256=1
 " 禁止光标闪烁
-set gcr=a:block-blinkon0
+set gcr=a:lCursor-blinkon0
+"set gcr=a:block-blinkon0
 " 禁止显示滚动条
 set guioptions-=l
 set guioptions-=L
@@ -157,7 +142,11 @@ let Tlist_Exit_OnlyWindow = 1
 " ---------------------------状 态 栏 设 置------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-" 开启语法高亮功能
+let g:airline_theme='papercolor'
+"let g:airline_theme='solarized_flood'
+"let g:airline_solarized_dark_inactive_border = 1
+"let g:airline_solarized_normal_green = 1
+"let g:airline_solarized_dark_text = 1
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
 syntax on
@@ -183,20 +172,11 @@ let g:indent_guides_tab_guides = 0
 " percent
 let g:indent_guides_color_change_percent = 90
 " 快捷键 i 开/关缩进可视化
-nmap <silent> <Leader>i <Plug>IndentGuidesToggle
-" 基于缩进或语法进行代码折叠
-"set foldmethod=indent
-set foldmethod=syntax
-" 启动 vim 时关闭折叠代码
-set nofoldenable
+"nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 " *.cpp 和 *.h 间切换
-nmap <silent> <Leader>sw :FSHere<cr>
+"nmap <silent> <Leader>sw :FSHere<cr>
 " ----------------------------代 码 折 叠--------------------------------------
-"操作：za:打开或关闭当前折叠, zM:关闭所有折叠, zR:打开所有折叠.
-" 基于缩进或语法进行代码折叠
-"set foldmethod=indent
 set foldmethod=syntax
-" 启动 vim 时关闭折叠代码
 set nofoldenable
 " ----------------------------标 识 符 列 表-----------------------------------
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边 
@@ -264,10 +244,6 @@ let g:ctrlp_regexp = 1
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。
 " 快捷键速记法：search in project
 nnoremap <silent> <Leader>sp :CtrlSF<CR>
-" 正向遍历同名标签
-nmap <Leader>tn :tnext<CR>
-" 反向遍历同名标签
-nmap <Leader>tp :tprevious<CR>
 " 设置搜索
 let g:ctrlsf_ackprg = 'ag'
 let g:ctrlsf_search_mode = 'sync'
@@ -277,25 +253,42 @@ let g:ctrlsf_search_mode = 'sync'
 let g:indexer_ctagsCommandLineOptions="--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+iaSl --extra=+q"
 " ---------------------------代 码 补 全---------------------------------------
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+"let g:UltiSnipsExpandTrigger="<leader><tab>"
+"let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
+" -------------------------------ALE-------------------------------------------
+let g:ale_sign_column_always = 0
+let g:ale_sign_error = '>'
+let g:ale_sign_warning = '+'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_list_window_size = 5
+" Only let ale call clang
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+\   'c': ['clang'],
+\   'c++': ['clang'],
+\}
 " -------------------------------YCM-------------------------------------------
+highlight Pmenu ctermfg=249 ctermbg=233
+highlight PmenuSel ctermfg=249 ctermbg=100 cterm=bold
+set completeopt-=preview
 let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_global_ycm_extra_conf = '/home/zet/.vim/ycm-config/.ycm_extra_conf.py'
-let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm-config/.ycm_extra_conf.py'
+let g:ycm_python_binary_path = '/usr/bin/python'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_error_symbol = ''
 let g:ycm_warning_symbol = ''
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_collect_identifiers_from_tags_files = 1 
 let g:ycm_seed_identifiers_with_syntax = 1
-set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-" 
+let g:ycm_disable_for_files_larger_than_kb = 5000
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
