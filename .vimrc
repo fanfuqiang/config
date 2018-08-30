@@ -7,7 +7,6 @@ filetype on
 filetype plugin on
 " taglist
 map <silent> <F9> :TlistToggle<CR>
-map <silent> <F5> :ALEToggle<CR>
 " Open the definition in a vertical split
 nnoremap <silent> <C-\> :vs <CR>:exec("tag ".expand("<cword>"))<CR>
 " Open the definition in a horizontal split
@@ -257,6 +256,10 @@ let g:indexer_ctagsCommandLineOptions="--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v 
 "let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 "let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 " -------------------------------ALE-------------------------------------------
+nmap <silent> <F5>  <Plug>(ale_toggle)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-i> <Plug>(ale_detail)
 let g:ale_sign_column_always = 0
 let g:ale_sign_error = '>'
 let g:ale_sign_warning = '+'
@@ -265,12 +268,14 @@ let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_list_window_size = 5
+" set this because a vim bug, cannot see cursor
+let g:ale_echo_cursor = 0
 " Only let ale call clang
-let g:ale_linters_explicit = 1
-let g:ale_linters = {
-\   'c': ['clang'],
-\   'c++': ['clang'],
-\}
+"let g:ale_linters_explicit = 1
+"let g:ale_linters = {
+"\   'c': ['clang'],
+"\   'c++': ['clang'],
+"\}
 " -------------------------------YCM-------------------------------------------
 highlight Pmenu ctermfg=249 ctermbg=233
 highlight PmenuSel ctermfg=249 ctermbg=100 cterm=bold
