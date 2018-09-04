@@ -1,6 +1,5 @@
 " ----------------------------基 本 配 置--------------------------------------
-" 定义快捷键的前缀，即<Leader>
-let mapleader=";"
+let mapleader = "\<Space>" 
 " 开启文件类型侦测
 filetype on
 " 根据侦测到的不同类型加载对应的插件
@@ -27,7 +26,7 @@ set nocompatible
 set wildmenu
 " disable continuation of comment
 au FileType * setlocal formatoptions-=c formatoptions-=r
-" italic字体注释
+" italic
 highlight Comment cterm=italic
 "-------------------------new tab style----------------------------------------
 " 设置新窗口在当前窗口的下面和右边
@@ -82,7 +81,7 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
 "Plugin 'sjl/gundo.vim'
-Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
 "Plugin 'lilydjwg/fcitx.vim'
 " 插件列表结束
@@ -141,10 +140,10 @@ let Tlist_Exit_OnlyWindow = 1
 " ---------------------------状 态 栏 设 置------------------------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme='papercolor'
-"let g:airline_theme='solarized_flood'
+"let g:airline_theme='papercolor'
+"let g:airline_theme='simple'
 "let g:airline_solarized_dark_inactive_border = 1
-"let g:airline_solarized_normal_green = 1
+let g:airline_solarized_normal_green = 1
 "let g:airline_solarized_dark_text = 1
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
@@ -231,8 +230,6 @@ let g:ctrlp_custom_ignore = {
   \ }
 " Use a custom file listing command
 let g:ctrlp_user_command = 'find %s -type f'
-" Ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 " Set this to 1 to set searching by filename
 "let g:ctrlp_by_filename = 1
 " Set this to 1 to set regexp search as default
@@ -241,9 +238,7 @@ let g:ctrlp_regexp = 1
 "let g:ctrlp_use_caching = 1
 " --------------------------标 识 符 跳 转-------------------------------------
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。
-" 快捷键速记法：search in project
 nnoremap <silent> <Leader>sp :CtrlSF<CR>
-" 设置搜索
 let g:ctrlsf_ackprg = 'ag'
 let g:ctrlsf_search_mode = 'sync'
 " 设置插件 indexer 调用 ctags 的参数
@@ -262,14 +257,14 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-i> <Plug>(ale_detail)
 let g:ale_sign_column_always = 0
 let g:ale_sign_error = '>'
-let g:ale_sign_warning = '+'
+let g:ale_sign_warning = '>'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_list_window_size = 5
 " set this because a vim bug, cannot see cursor
-let g:ale_echo_cursor = 0
+let g:ale_echo_cursor = 1
 " Only let ale call clang
 "let g:ale_linters_explicit = 1
 "let g:ale_linters = {
@@ -283,7 +278,7 @@ set completeopt-=preview
 let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm-config/.ycm_extra_conf.py'
-let g:ycm_python_binary_path = '/usr/bin/python'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_error_symbol = ''
 let g:ycm_warning_symbol = ''
@@ -308,11 +303,6 @@ let g:ycm_filetype_blacklist = {
       \ 'ctrlsf' : 1,
       \ 'vim-airline' : 1,
       \}
-" -------------------------------syntastic-------------------------------------
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-"nnoremap <Leader>e :SyntasticCheck<CR> 
-"nnoremap <Leader>f :SyntasticToggleMode<CR>
 " ------------------------------NERDTree---------------------------------------
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 nmap <silent> <Leader>fl :NERDTreeToggle<CR>

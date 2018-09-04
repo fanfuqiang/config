@@ -10,5 +10,5 @@ set directories ~/code/glibc-2.27/
 set directories ~/code/glibc-2.27/elf
 set directories ~/code/glibc-2.27/malloc
 set directories ~/code/glibc-2.27/nptl
+set directories ~/code/glibc-2.27/dlfcn
 set directories ~/code/glibc-2.27/sysdeps
-
