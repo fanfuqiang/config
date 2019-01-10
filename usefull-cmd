@@ -5,3 +5,5 @@ find . -name "*.o" -type f -print0 | xargs -0 rm -f
 ../configure --prefix=/home/zet/bin/llvm-28 --enable-debug-runtime 
         --enable-debug-symbols --enable-shared 
         --enable-targets=host,cbe,cpp,mblaze
+# disaplay all the passes
+clang -save-temps -v -mllvm -debug-pass=Structure
