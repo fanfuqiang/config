@@ -277,7 +277,7 @@ highlight PmenuSel ctermfg=249 ctermbg=100 cterm=bold
 set completeopt-=preview
 let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm-config/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/ycmd/.ycm_extra_conf.py'
 let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_error_symbol = ''
@@ -318,4 +318,5 @@ let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 " -----------------------------ctags 搜 索 路 径-------------------------------
 set tags=./tags;/
-
+let &t_TI = ""
+let &t_TE = ""
